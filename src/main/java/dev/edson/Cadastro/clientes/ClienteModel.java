@@ -1,6 +1,9 @@
-package dev.edson.Cadastro;
+package dev.edson.Cadastro.clientes;
 
+import dev.edson.Cadastro.missoes.MissoesModel;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="tb_cadastro")
@@ -9,9 +12,16 @@ public class ClienteModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nome;
+
     private String email;
+
     private int idade;
+//@ManyToOne um cliente tem apenas uma missão
+    @ManyToOne
+    @JoinColumn(name = "missoes_id")
+    private MissoesModel missoes;
 
     public ClienteModel() {
 

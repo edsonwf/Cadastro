@@ -1,4 +1,4 @@
-package dev.edson.Cadastro;
+package dev.edson.Cadastro.clientes;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
