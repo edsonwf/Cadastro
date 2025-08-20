@@ -1,12 +1,10 @@
 package dev.edson.Cadastro.missoes;
 
-import dev.edson.Cadastro.clientes.ClienteModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -22,7 +20,31 @@ public class MissoesModel {
 
     private String dificuldade;
 
-    //@OneToMany - um missão pode ter vários clientes
-    @OneToMany(mappedBy = "missoes")
-    private List<ClienteModel> clientes;
+    // Relacionamento OneToMany removido para evitar dependência circular
+    // Um cliente pode ter uma missão, mas não precisamos da lista inversa aqui
+
+    // Getters e Setters explícitos para garantir funcionamento
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDificuldade() {
+        return dificuldade;
+    }
+
+    public void setDificuldade(String dificuldade) {
+        this.dificuldade = dificuldade;
+    }
 }
