@@ -1,10 +1,19 @@
 package dev.edson.Cadastro.clientes;
 
+
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
 public class ClienteController {
+
+    private ClienteService clienteService;
+
+    public ClienteController(ClienteService clienteService){
+        this.clienteService = clienteService;
+    }
 
     @GetMapping("/boasVindas")
     public String boasVindas(){
@@ -26,8 +35,8 @@ public class ClienteController {
 
     //Mostrar todos os clientes Read
     @GetMapping("/listar")
-    public String mostrarTodosClientes(){
-        return "Todos os clientes";
+    public List<ClienteModel> mostrarTodosClientes(){
+        return clienteService.listarTodos();
     }
 
     //Alterar dados dos Clintes Update
