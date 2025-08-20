@@ -3,7 +3,7 @@ package dev.edson.Cadastro.clientes;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @GetMapping("/boasVindas")
@@ -19,13 +19,13 @@ public class ClienteController {
 
 
     // Procurar Cliente por ID Read
-    @GetMapping("/clienteId")
+    @GetMapping("/listarId")
     public String mostrarClientesPorID(){
-        return "Todos os clientes";
+        return "clientes id";
     }
 
     //Mostrar todos os clientes Read
-    @GetMapping("/todos")
+    @GetMapping("/listar")
     public String mostrarTodosClientes(){
         return "Todos os clientes";
     }
