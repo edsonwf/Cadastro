@@ -12,26 +12,31 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public List<ClienteModel> listarTodos() {
+    @Autowired
+    private ClienteMapper clienteMapper;
 
-        return clienteRepository.findAll();
+    public List<ClienteDTO> listarTodos() {
+        ClienteModel <cliente> = clienteRepository.findAll();
+        return new clienteMapper.map(cliente);
     }
 
-    public ClienteModel buscarPorId(Long id) {
+    public ClienteDTO buscarPorId(Long id) {
 
-        Optional<ClienteModel> clienteModel = clienteRepository.findById(id);
-        return clienteModel.orElse(null);
+        Optional< ClienteDTO>  clienteDTO = clienteRepository.findById(id);
+        return  clienteDTO.orElse(null);
     }
 
-    public ClienteModel salvar(ClienteModel cliente) {
-        return clienteRepository.save(cliente);
+    public  ClienteDTO salvar( ClienteDTO clienteDTO) {
+        ClienteModel cliente = new clienteMapper.map(clienteDTO);
+        cliente = clienteRepository.save(cliente);
+        return clienteMapper.map(cliente);
     }
 
     public void deletar(Long id) {
         clienteRepository.deleteById(id);
     }
 
-    public ClienteModel atualizar(Long id, ClienteModel cliente) {
+    public  ClienteDTO atualizar(Long id,  ClienteDTO cliente) {
         if (clienteRepository.existsById(id)) {
             cliente.setId(id);
             return clienteRepository.save(cliente);
