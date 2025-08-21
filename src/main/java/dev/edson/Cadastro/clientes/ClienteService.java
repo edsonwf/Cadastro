@@ -38,4 +38,5 @@ public class ClienteService {
         }
         throw new RuntimeException("Cliente não encontrado com ID: " + id);
     }
+
 }

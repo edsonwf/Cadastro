@@ -799,3 +799,13 @@ select * from missoes [42102-232]
 2025-08-21 08:49:38.947278-03:00 jdbc[13]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MISSOES" not found; SQL statement:
 insert into missoes values (1, 'Média','Salvar o porco') [42102-232]
+2025-08-21 09:14:22.183318-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "insert into tb_missoes values (1,'Média','Salvar o porco'),(2,'Média','Prender o Noia'),(3','Dificil','Derrubar o nine[*]');"; SQL statement:
+insert into tb_missoes values (1,'Média','Salvar o porco'),(2,'Média','Prender o Noia'),(3','Dificil','Derrubar o nine'); [42000-232]
+2025-08-21 09:42:17.056582-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "insert into tb_missoes values (1,'Média','Salvar o porco'),(2,'Média','Prender o Noia'),(3','Dificil','Derrubar o nine[*]');\000d\000aselect * from tb_missoes;"; SQL statement:
+insert into tb_missoes values (1,'Média','Salvar o porco'),(2,'Média','Prender o Noia'),(3','Dificil','Derrubar o nine');
+select * from tb_missoes; [42000-232]
+2025-08-21 09:43:20.053430-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TB_CLIENTES" not found; SQL statement:
+select * from tb_clientes [42102-232]
