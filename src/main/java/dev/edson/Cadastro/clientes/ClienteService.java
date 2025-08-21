@@ -13,11 +13,14 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
 
     public List<ClienteModel> listarTodos() {
+
         return clienteRepository.findAll();
     }
 
-    public Optional<ClienteModel> buscarPorId(Long id) {
-        return clienteRepository.findById(id);
+    public ClienteModel buscarPorId(Long id) {
+
+        Optional<ClienteModel> clienteModel = clienteRepository.findById(id);
+        return clienteModel.orElse(null);
     }
 
     public ClienteModel salvar(ClienteModel cliente) {

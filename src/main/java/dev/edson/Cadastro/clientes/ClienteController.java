@@ -22,15 +22,15 @@ public class ClienteController {
 
     //Adicionar Cliente Create
     @PostMapping("/criar")
-    public String criarCliente(){
-        return "Cliente criado";
+    public ClienteModel criarCliente(@RequestBody ClienteModel cliente){
+        return clienteService.salvar(cliente);
     }
 
 
     // Procurar Cliente por ID Read
-    @GetMapping("/listarId")
-    public String mostrarClientesPorID(){
-        return "clientes id";
+    @GetMapping("/listar/{id}")
+    public ClienteModel mostrarClientesPorID(@PathVariable Long id){
+        return  clienteService.buscarPorId(id);
     }
 
     //Mostrar todos os clientes Read
