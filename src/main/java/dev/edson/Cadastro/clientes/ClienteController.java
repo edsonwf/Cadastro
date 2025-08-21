@@ -40,9 +40,10 @@ public class ClienteController {
     }
 
     //Alterar dados dos Clintes Update
-    @PutMapping("/alterarID")
-    public String alterarClientesPorID(){
-        return "Alterar clientes";
+    @PutMapping("/alterar/{id}")
+    public ClienteModel alterarClientesPorID(@PathVariable Long id, @RequestBody ClienteModel cliente){
+
+        return clienteService.atualizar(id, cliente);
     }
 
 
