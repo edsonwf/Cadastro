@@ -29,9 +29,14 @@ public class ClienteModel {
     @Column(name="idade")
     private int idade;
 
+    @Column(name="rank")
+    private String rank;
+
     @ManyToOne
     @JoinColumn(name = "missoes_id")
     private MissoesModel missoes;
+
+
 
     // Getters e Setters explícitos para garantir funcionamento
     public Long getId() {
