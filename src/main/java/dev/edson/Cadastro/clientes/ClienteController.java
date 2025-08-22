@@ -1,6 +1,9 @@
 package dev.edson.Cadastro.clientes;
 
 
+import ch.qos.logback.core.net.server.Client;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,28 +25,36 @@ public class ClienteController {
 
     //Adicionar Cliente Create
     @PostMapping("/criar")
-    public  ClienteDTO criarCliente(@RequestBody  ClienteDTO cliente){
-        return clienteService.salvar(cliente);
-    }
-
-
-    // Procurar Cliente por ID Read
-    @GetMapping("/listar/{id}")
-    public  ClienteDTO mostrarClientesPorID(@PathVariable Long id){
-        return  clienteService.buscarPorId(id);
+    public ResponseEntity<String> criarCliente (@RequestBody ClienteDTO cliente ){
+        ClienteDTO clienteDTO = clienteService.salvar(cliente);
+        return  ResponseEntity.status(HttpStatus.CREATED).body("Cliente criado com sucesso: "+clienteDTO.getNome()+ " (ID) :"+clienteDTO.getId());
     }
 
     //Mostrar todos os clientes Read
     @GetMapping("/listar")
-    public List<ClienteDTO> mostrarTodosClientes(){
-        return clienteService.listarTodos();
+    public ResponseEntity<List<ClienteDTO>> mostrarTodosClientes(){
+        List<ClienteDTO> cliente = clienteService.listarTodos();
+        return ResponseEntity.ok(cliente);
+    }
+
+    @GetMapping("/listar/id")
+    public ResponseEntity<?> listarClientePorId(@PathVariable Long id){
+
+        ClienteDTO cliente = clienteService.buscarPorId(id);
+        if(cliente != null){
+            return ResponseEntity.ok(cliente);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente com esse ID não existe nos registros ");
     }
 
     //Alterar dados dos Clintes Update
-    @PatchMapping("/alterar/{id}")
-    public  ClienteDTO alterarClientesPorID(@PathVariable Long id, @RequestBody  ClienteDTO cliente){
-
-        return clienteService.atualizar(id, cliente);
+    @PutMapping("/alterar/{id}")
+    public  ResponseEntity<?> alterarClientesPorID(@PathVariable Long id, @RequestBody  ClienteDTO cliente){
+        ClienteDTO clienteAtualizado = clienteService.atualizar(id, cliente);
+        if(clienteAtualizado != null){
+            return ResponseEntity.ok(clienteAtualizado);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente com id: " + id + " não existe no cadastro.");
     }
 
 
@@ -51,8 +62,12 @@ public class ClienteController {
 
     //Deletar Clientes Delete
     @DeleteMapping("/deletar/{id}")
-    public void deletarClientesPorID(@PathVariable Long id){
-        clienteService.deletar(id);
+    public ResponseEntity<String> deletarClientesPorID(@PathVariable Long id){
+        if(clienteService.buscarPorId(id)!= null) {
+            clienteService.deletar(id);
+            return ResponseEntity.ok("Cliente deletado com sucesso "+ id);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente com id "+ id + " não encontrado ");
     }
 
 }
