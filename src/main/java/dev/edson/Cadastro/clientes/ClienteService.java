@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
@@ -16,18 +17,21 @@ public class ClienteService {
     private ClienteMapper clienteMapper;
 
     public List<ClienteDTO> listarTodos() {
-        ClienteModel <cliente> = clienteRepository.findAll();
-        return new clienteMapper.map(cliente);
+       List<ClienteModel> clientes = clienteRepository.findAll();
+       return clientes.stream()
+               .map(clienteMapper::map)
+               .collect(Collectors.toList());
+
     }
 
     public ClienteDTO buscarPorId(Long id) {
 
-        Optional< ClienteDTO>  clienteDTO = clienteRepository.findById(id);
-        return  clienteDTO.orElse(null);
+        Optional< ClienteModel>  cliente = clienteRepository.findById(id);
+        return  cliente.map(clienteMapper::map).orElse(null);
     }
 
     public  ClienteDTO salvar( ClienteDTO clienteDTO) {
-        ClienteModel cliente = new clienteMapper.map(clienteDTO);
+        ClienteModel cliente = clienteMapper.map(clienteDTO);
         cliente = clienteRepository.save(cliente);
         return clienteMapper.map(cliente);
     }
@@ -37,11 +41,15 @@ public class ClienteService {
     }
 
     public  ClienteDTO atualizar(Long id,  ClienteDTO cliente) {
-        if (clienteRepository.existsById(id)) {
-            cliente.setId(id);
-            return clienteRepository.save(cliente);
+        Optional<ClienteModel> clienteExistente = clienteRepository.findById(id);
+        if(clienteExistente.isPresent()){
+            ClienteModel clienteAtualizado = clienteMapper.map(cliente);
+            clienteAtualizado.setId(id);
+            ClienteModel clienteSalvo = clienteRepository.save(clienteAtualizado);
+            return clienteMapper.map(clienteSalvo);
         }
-        throw new RuntimeException("Cliente não encontrado com ID: " + id);
+        return null;
+
     }
 
 }
